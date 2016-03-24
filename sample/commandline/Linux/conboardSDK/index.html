@@ -1,0 +1,100 @@
+  <!DOCTYPE html>
+  <html>
+  <head>
+      <script src="http://code.jquery.com/jquery-latest.min.js"
+              type="text/javascript"></script>
+
+      <script type="text/javascript">
+          console.log('init');
+
+          function takeoff(){
+              console.log("takeoff");
+              $.ajax({
+                  url: "takeoff",
+                  success: function( data ) {
+                      console.log('takeoff ok')
+                  }
+              });
+          }
+
+          function release(){
+              console.log("release");
+              $.ajax({
+                  url: "/release",
+                  success: function( data ) {
+                      console.log('release ok')
+                  }
+              });
+          }
+
+          function obtain(){
+              console.log("obtain control");
+              $.ajax({
+                  url: "/obtain",
+                  success: function( data ) {
+                      console.log('obtain control ok')
+                  }
+              });
+          }
+
+          function landing(){
+              console.log("landing");
+              $.ajax({
+                  url: "/landing",
+                  success: function( data ) {
+                      console.log('landing ok')
+                  }
+              });
+          }
+
+          function activate(){
+              console.log("activate");
+              $.ajax({
+                  url: "/activate",
+                  success: function( data ) {
+                      console.log('activate ok')
+                  }
+              });
+          }
+
+          function telemetry_data_time(){
+              console.log("telemetry_data_time");
+              $.ajax({
+                  url: "/telemetry_data_time",
+                  success: function( data ) {
+                      console.log('telemetry_data_status ok')
+                  }
+              });
+          }
+
+          function telemetry_data_status(){
+              console.log("telemetry_data_status");
+              $.ajax({
+                  url: "/telemetry_data_status",
+                  success: function( data ) {
+                      console.log('telemetry_data_status ok')
+                  }
+              });
+          }
+
+          function telemetry_data_battery(){
+              console.log("telemetry_data_battery");
+              $.ajax({
+                  url: "/telemetry_data_battery",
+                  success: function( data ) {
+                      console.log('telemetry_data_battery ok')
+                  }
+              });
+          }
+      </script>
+  </head>
+  <body>
+<button onclick="activate()">ACTIVATE</button>
+<button onclick="obtain()">OBTAIN CONTROL</button>
+<button onclick="release()">RELEASE CONTROL</button>
+  <button onclick="takeoff()">START</button>
+  <button onclick="telemetry_data_time()">TIME</button>
+  <button onclick="telemetry_data_status()">STATUS</button>
+  <button onclick="telemetry_data_battery()">BATTERY</button>
+  </body>
+  </html>
