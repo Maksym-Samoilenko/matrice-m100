@@ -97,7 +97,7 @@ void landing(Request* req, Response* res) {
     res->body << "landing";
 }
 void activate(Request* req, Response* res) {
-    script.adata.ID = "id";//ID
+    script.adata.ID = 2;//ID
     script.adata.reserved = 2;
     script.adata.version = version;
     script.adata.encKey = "key";//KEy
