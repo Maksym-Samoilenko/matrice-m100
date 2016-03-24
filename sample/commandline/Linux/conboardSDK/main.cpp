@@ -12,7 +12,7 @@ using namespace WPP;
 HardDriverManifold driver("/dev/ttyTHS1", 230400);
 CoreAPI api(&driver);
 ConboardSDKScript script(&api);
-const Version SDK_VERSION = (MAKE_VERSION(3, 1, 10, 0));
+const int SDK_VERSION = (MAKE_VERSION(3, 1, 10, 0));
 
 const char * get_index_html(){
     return "  <!DOCTYPE html>\n"
@@ -85,11 +85,11 @@ void index(Request* req, Response* res) {
     res->body << get_index_html();
 }
 void takeoff(Request* req, Response* res) {
-    script->getFlight()->task((DJI::onboardSDK::Flight::TASK)4);
+    script.getFlight()->task((DJI::onboardSDK::Flight::TASK)4);
     res->body << "takeoff";
 }
 void landing(Request* req, Response* res) {
-    script->getFlight()->task((DJI::onboardSDK::Flight::TASK)6);
+    script.getFlight()->task((DJI::onboardSDK::Flight::TASK)6);
     res->body << "landing";
 }
 void activate(Request* req, Response* res) {
@@ -97,34 +97,34 @@ void activate(Request* req, Response* res) {
     script->adata.reserved = 2;
     script->adata.version = SDK_VERSION;
     script->adata.encKey = key;//KEy
-    script->getApi()->activate(&script->adata);
+    script.getApi()->activate(&script->adata);
     res->body << "activated";
 }
 void release_control(Request* req, Response* res) {
-    script->getApi()->setControl(false);
+    script.getApi()->setControl(false);
     res->body << "release_control";
 }
 void obtain_control(Request* req, Response* res) {
-    script->getApi()->setControl(true);
+    script.getApi()->setControl(true);
     res->body << "obtain_control";
 }
 
 void telemetry_data_time(Request* req, Response* res) {
     //Telemetry
-    BroadcastData bd = script->getApi()->getBroadcastData();
+    BroadcastData bd = script.getApi()->getBroadcastData();
     res->body << bd.timeStamp.time;
 }
 
 void telemetry_data_status(Request* req, Response* res) {
     //Telemetry
-    BroadcastData bd = script->getApi()->getBroadcastData();
+    BroadcastData bd = script.getApi()->getBroadcastData();
     
     res->body << (int)bd.status;
 }
 
 void telemetry_data_battery(Request* req, Response* res) {
     //Telemetry
-    BroadcastData bd = script->getApi()->getBroadcastData();
+    BroadcastData bd = script.getApi()->getBroadcastData();
     
     res->body << (int)bd.battery;
 }
