@@ -93,11 +93,11 @@ void landing(Request* req, Response* res) {
     res->body << "landing";
 }
 void activate(Request* req, Response* res) {
-    script->adata.ID = id;//ID
-    script->adata.reserved = 2;
-    script->adata.version = SDK_VERSION;
-    script->adata.encKey = key;//KEy
-    script.getApi()->activate(&script->adata);
+    script.adata.ID = "id";//ID
+    script.adata.reserved = 2;
+    script.adata.version = SDK_VERSION;
+    script.adata.encKey = "key";//KEy
+    script.getApi()->activate(script->adata);
     res->body << "activated";
 }
 void release_control(Request* req, Response* res) {
