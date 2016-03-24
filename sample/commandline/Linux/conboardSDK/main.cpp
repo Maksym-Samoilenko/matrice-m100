@@ -12,7 +12,11 @@ using namespace WPP;
 HardDriverManifold driver("/dev/ttyTHS1", 230400);
 CoreAPI api(&driver);
 ConboardSDKScript script(&api);
-const int SDK_VERSION = (MAKE_VERSION(3, 1, 10, 0));
+#define make_vers(a, b, c, d)                                                               \
+    (((a << 24) & 0xff000000) | ((b << 16) & 0x00ff0000) | ((c << 8) & 0x0000ff00) |           \
+     (d & 0x000000ff))
+
+const int version = (make_vers(3, 1, 10, 0));
 
 const char * get_index_html(){
     return "  <!DOCTYPE html>\n"
@@ -95,9 +99,9 @@ void landing(Request* req, Response* res) {
 void activate(Request* req, Response* res) {
     script.adata.ID = "id";//ID
     script.adata.reserved = 2;
-    script.adata.version = SDK_VERSION;
+    script.adata.version = version;
     script.adata.encKey = "key";//KEy
-    script.getApi()->activate(script->adata);
+    script.getApi()->activate(script.adata);
     res->body << "activated";
 }
 void release_control(Request* req, Response* res) {
