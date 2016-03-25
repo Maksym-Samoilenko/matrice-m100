@@ -13,7 +13,7 @@ using namespace WPP;
     (((a << 24) & 0xff000000) | ((b << 16) & 0x00ff0000) | ((c << 8) & 0x0000ff00) |           \
      (d & 0x000000ff))
 
-HardDriverManifold driver("/dev/ttyTHS1", 230400);
+HardDriverManifold driver("/dev/ttyUSB0", 230400);
 driver.init();
 CoreAPI api(&driver);
 ConboardSDKScript script(&api);
