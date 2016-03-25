@@ -12,6 +12,7 @@
               $.ajax({
                   url: "takeoff",
                   success: function( data ) {
+                    console.log(data);
                       console.log('takeoff ok')
                   }
               });
@@ -22,6 +23,7 @@
               $.ajax({
                   url: "/release",
                   success: function( data ) {
+                    console.log(data);
                       console.log('release ok')
                   }
               });
@@ -32,6 +34,7 @@
               $.ajax({
                   url: "/obtain",
                   success: function( data ) {
+                    console.log(data);
                       console.log('obtain control ok')
                   }
               });
@@ -42,6 +45,7 @@
               $.ajax({
                   url: "/landing",
                   success: function( data ) {
+                    console.log(data);
                       console.log('landing ok')
                   }
               });
@@ -52,6 +56,7 @@
               $.ajax({
                   url: "/activate",
                   success: function( data ) {
+                    console.log(data);
                       console.log('activate ok')
                   }
               });
@@ -62,6 +67,7 @@
               $.ajax({
                   url: "/telemetry_data_time",
                   success: function( data ) {
+                    alert.log(data);
                       console.log('telemetry_data_status ok')
                   }
               });
@@ -72,6 +78,7 @@
               $.ajax({
                   url: "/telemetry_data_status",
                   success: function( data ) {
+                    alert.log(data);
                       console.log('telemetry_data_status ok')
                   }
               });
@@ -82,6 +89,7 @@
               $.ajax({
                   url: "/telemetry_data_battery",
                   success: function( data ) {
+                       alert.log(data);
                       console.log('telemetry_data_battery ok')
                   }
               });
@@ -92,9 +100,9 @@
 <button onclick="activate()">ACTIVATE</button>
 <button onclick="obtain()">OBTAIN CONTROL</button>
 <button onclick="release()">RELEASE CONTROL</button>
-  <button onclick="takeoff()">START</button>
-  <button onclick="telemetry_data_time()">TIME</button>
-  <button onclick="telemetry_data_status()">STATUS</button>
-  <button onclick="telemetry_data_battery()">BATTERY</button>
-  </body>
-  </html>
+<button onclick="takeoff()">START</button>
+<button onclick="telemetry_data_time()">TIME</button>
+<button onclick="telemetry_data_status()">STATUS</button>
+<button onclick="telemetry_data_battery()">BATTERY</button>
+</body>
+</html>
