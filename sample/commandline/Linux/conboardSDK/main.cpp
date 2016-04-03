@@ -8,6 +8,7 @@
 #include "web++.hpp"
 #include "cmdIO.h"
 #include "cmdFollow.h"
+#include "HotPoint.h"
 #include <string>
 using namespace std;
 using namespace WPP;
@@ -226,12 +227,12 @@ void telemetry_data_gps(Request* req, Response* res) {
 }
 
 void follow_point_by_gps(Request* req, Response* res) {
-  HotPoint hotpoint(api);
+  HotPoint hotpoint(&api);
   GPSData myGPSData;
   HotPointData myHotPointData;
   myGPSData.altitude = 50;
-	myGPSData.latitude = coreApi->getBroadcastData().pos.latitude;
-	myGPSData.longtitude = coreApi->getBroadcastData().pos.longitude;
+	myGPSData.latitude = script.getApi()->getBroadcastData().pos.latitude;
+	myGPSData.longtitude = script.getApi()->getBroadcastData().pos.longitude;
 
 	hotpoint.setHotPoint(myGPSData);
 	hotpoint.setPalstance(15);
