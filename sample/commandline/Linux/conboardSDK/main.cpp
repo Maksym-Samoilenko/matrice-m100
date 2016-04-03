@@ -136,7 +136,7 @@ void index(Request* req, Response* res) {
                 "          function follow_point_by_gps(){\n" +
                 "              console.log(\"follow_point_by_gps\");\n" +
                 "              $.ajax({\n" +
-                "                  url: \"/follow_point_by_gps\"\n" +
+                "                  url: \"/follow_point_by_gps\",\n" +
                 "                  success: function( data ) {\n" +
                 "                      console.log(data);\n" +
                 "                  }\n" +
