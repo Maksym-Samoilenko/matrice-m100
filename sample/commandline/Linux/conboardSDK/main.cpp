@@ -127,7 +127,16 @@ void index(Request* req, Response* res) {
                 "          function follow_point(){\n" +
                 "              console.log(\"follow_point\");\n" +
                 "              $.ajax({\n" +
-                "                  url: \"/follow_point?x=\"  + $(\"#x_selector\").val() + \"&y=\" + $(\"#y_selector\").val() +\"&z=\" + $(\"#z_selector\").val() +\"&yaw=\" + $(\"#yaw_selector\").val()" + ",\n"
+                "                  url: \"/follow_point?x=\"  + $(\"#x_selector\").val() + \"&y=\" + $(\"#y_selector\").val() +\"&z=\" + $(\"#z_selector\").val() +\"&yaw=\" + $(\"#yaw_selector\").val()" + "\",\n"
+                "                  success: function( data ) {\n" +
+                "                      console.log(data);\n" +
+                "                  }\n" +
+                "              });\n" +
+                "          }\n" +
+                "          function follow_point_by_gps(){\n" +
+                "              console.log(\"follow_point_by_gps\");\n" +
+                "              $.ajax({\n" +
+                "                  url: \"/follow_point_by_gps\"\n" +
                 "                  success: function( data ) {\n" +
                 "                      console.log(data);\n" +
                 "                  }\n" +
