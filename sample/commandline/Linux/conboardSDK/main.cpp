@@ -115,6 +115,15 @@ void index(Request* req, Response* res) {
                 "                  }\n" +
                 "              });\n" +
                 "          }\n" +
+                "          function telemetry_data_gps(){\n" +
+                "              console.log(\"telemetry_data_gps\");\n" +
+                "              $.ajax({\n" +
+                "                  url: \"/telemetry_data_gps\",\n" +
+                "                  success: function( data ) {\n" +
+                "                      alert(data);\n" +
+                "                  }\n" +
+                "              });\n" +
+                "          }\n" +
                 "          function follow_point(){\n" +
                 "              console.log(\"follow_point\");\n" +
                 "              $.ajax({\n" +
@@ -135,7 +144,7 @@ void index(Request* req, Response* res) {
                 "  <button onclick=\"telemetry_data_time()\">TIME</button>\n" +
                 "  <button onclick=\"telemetry_data_status()\">STATUS</button>\n" +
                 "  <button onclick=\"telemetry_data_battery()\">BATTERY</button><br>\n" +
-
+                "  <button onclick=\"telemetry_data_gps()\">GPS</button><br>\n" +
           "<p>X</p><select name=\"x_sel\" id=\"x_selector\"><option value=\"0\">0</option><option value=\"0.25\">0.25</option><option value=\"0.5\">0.5</option><option value=\"0.75\">0.75</option><option value=\"1\">1</option><option value=\"1.25\">1.25</option><option value=\"1.5\">1.5</option><option value=\"1.75\">1.75</option><option value=\"2\">2</option><option value=\"-0.25\">-0.25</option><option value=\"-0.5\">-0.5</option><option value=\"-0.75\">-0.75</option><option value=\"-1\">-1</option><option value=\"-1.25\">-1.25</option><option value=\"-1.5\">-1.5</option><option value=\"-1.75\">-1.75</option><option value=\"-2\">-2</option></select>\n"+
           "<p>Y</p><select name=\"y_sel\" id=\"y_selector\"><option value=\"0\">0</option><option value=\"0.25\">0.25</option><option value=\"0.5\">0.5</option><option value=\"0.75\">0.75</option><option value=\"1\">1</option><option value=\"1.25\">1.25</option><option value=\"1.5\">1.5</option><option value=\"1.75\">1.75</option><option value=\"2\">2</option><option value=\"-0.25\">-0.25</option><option value=\"-0.5\">-0.5</option><option value=\"-0.75\">-0.75</option><option value=\"-1\">-1</option><option value=\"-1.25\">-1.25</option><option value=\"-1.5\">-1.5</option><option value=\"-1.75\">-1.75</option><option value=\"-2\">-2</option></select>\n"+
           "<p>Z</p><select name=\"z_sel\" id=\"z_selector\"><option value=\"0\">0</option><option value=\"0.25\">0.25</option><option value=\"0.5\">0.5</option><option value=\"0.75\">0.75</option><option value=\"1\">1</option><option value=\"1.25\">1.25</option><option value=\"1.5\">1.5</option><option value=\"1.75\">1.75</option><option value=\"2\">2</option><option value=\"-0.25\">-0.25</option><option value=\"-0.5\">-0.5</option><option value=\"-0.75\">-0.75</option><option value=\"-1\">-1</option><option value=\"-1.25\">-1.25</option><option value=\"-1.5\">-1.5</option><option value=\"-1.75\">-1.75</option><option value=\"-2\">-2</option></select>\n"+
@@ -202,6 +211,26 @@ void telemetry_data_battery(Request* req, Response* res) {
   res->body << (float)bd.battery;
 }
 
+void telemetry_data_gps(Request* req, Response* res) {
+  BroadcastData bd = script.getApi()->getBroadcastData();
+  res->body << "Longitude: " << bd.pos.longitude << endl << "Latitude:  " << bd.pos.latitude << endl << "Altitude:  " << bd.pos.altitude << endl << "Height:    " << bd.pos.height << endl  << "Health:  " << (int)bd.pos.health << endl;
+}
+
+void follow_point_by_gps(Request* req, Response* res) {
+  HotPoint hotpoint(api);
+  GPSData myGPSData;
+  HotPointData myHotPointData;
+  myGPSData.altitude = 50;
+	myGPSData.latitude = coreApi->getBroadcastData().pos.latitude;
+	myGPSData.longtitude = coreApi->getBroadcastData().pos.longitude;
+
+	hotpoint.setHotPoint(myGPSData);
+	hotpoint.setPalstance(15);
+	hotpoint.setRadius(30);
+	hotpoint.start();
+    res->body << "Followed by GPS point";
+}
+
 void follow_point(Request* req, Response* res) {
 FlightData data;
 data.flag = 0x90;
@@ -250,6 +279,8 @@ int main(int argc, const char* argv[]) {
         server.get("/telemetry_data_status", &telemetry_data_status);
         server.get("/telemetry_data_battery", &telemetry_data_battery);
         server.get("/follow_point", &follow_point);
+        server.get("/follow_point_by_gps", &follow_point_by_gps);
+        server.get("/telemetry_data_gps", &telemetry_data_gps);
         server.start(5000);
     } catch(WPP::Exception e) {
         std::cerr << "WebServer: " << e.what() << std::endl;
