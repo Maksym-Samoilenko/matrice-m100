@@ -229,13 +229,13 @@ void telemetry_data_gps(Request* req, Response* res) {
 void follow_point_by_gps(Request* req, Response* res) {
   DJI::onboardSDK::HotPoint hotpoint(&api);
   GPSData myGPSData;
-  myGPSData.altitude = 10;
-	myGPSData.latitude = 3;
-	myGPSData.longtitude = 3;
+  myGPSData.altitude = 2;
+	myGPSData.latitude = script.getApi()->getBroadcastData().pos.latitude + 0.01;
+	myGPSData.longtitude = script.getApi()->getBroadcastData().pos.longitude + 0.01;
 
 	hotpoint.setHotPoint(myGPSData);
 	hotpoint.setPalstance(15);
-	hotpoint.setRadius(3);
+	hotpoint.setRadius(2);
 	hotpoint.start();
     res->body << "Followed by GPS point";
 }
