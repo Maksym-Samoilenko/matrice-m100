@@ -230,8 +230,8 @@ void follow_point_by_gps(Request* req, Response* res) {
   DJI::onboardSDK::HotPoint hotpoint(&api);
   GPSData myGPSData;
   myGPSData.altitude = 10;
-	myGPSData.latitude = script.getApi()->getBroadcastData().pos.latitude;
-	myGPSData.longtitude = script.getApi()->getBroadcastData().pos.longitude;
+	myGPSData.latitude = script.getApi()->getBroadcastData().pos.latitude + 1;
+	myGPSData.longtitude = script.getApi()->getBroadcastData().pos.longitude + 1;
 
 	hotpoint.setHotPoint(myGPSData);
 	hotpoint.setPalstance(15);
