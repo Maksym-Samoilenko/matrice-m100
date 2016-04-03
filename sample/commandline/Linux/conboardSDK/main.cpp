@@ -127,7 +127,7 @@ void index(Request* req, Response* res) {
                 "          function follow_point(){\n" +
                 "              console.log(\"follow_point\");\n" +
                 "              $.ajax({\n" +
-                "                  url: \"/follow_point?x=\"  + $(\"#x_selector\").val() + \"&y=\" + $(\"#y_selector\").val() +\"&z=\" + $(\"#z_selector\").val() +\"&yaw=\" + $(\"#yaw_selector\").val()" + ",\n"
+                "                  url: \"/follow_point?x=\"  + $(\"#x_selector\").val() + \"&y=\" + $(\"#y_selector\").val() +\"&z=\" + $(\"#z_selector\").val() +\"&yaw=\" + $(\"#yaw_selector\").val()" + ",\n" +
                 "                  success: function( data ) {\n" +
                 "                      console.log(data);\n" +
                 "                  }\n" +
@@ -152,7 +152,8 @@ void index(Request* req, Response* res) {
 
                 "  <button onclick=\"telemetry_data_time()\">TIME</button>\n" +
                 "  <button onclick=\"telemetry_data_status()\">STATUS</button>\n" +
-                "  <button onclick=\"telemetry_data_battery()\">BATTERY</button><br>\n" +
+                "  <button onclick=\"telemetry_data_battery()\">BATTERY</button>\n" +
+                "  <button onclick=\"follow_point_by_gps()\">FOLLOW POINT BY GPS</button>\n" +
                 "  <button onclick=\"telemetry_data_gps()\">GPS</button><br>\n" +
           "<p>X</p><select name=\"x_sel\" id=\"x_selector\"><option value=\"0\">0</option><option value=\"0.25\">0.25</option><option value=\"0.5\">0.5</option><option value=\"0.75\">0.75</option><option value=\"1\">1</option><option value=\"1.25\">1.25</option><option value=\"1.5\">1.5</option><option value=\"1.75\">1.75</option><option value=\"2\">2</option><option value=\"-0.25\">-0.25</option><option value=\"-0.5\">-0.5</option><option value=\"-0.75\">-0.75</option><option value=\"-1\">-1</option><option value=\"-1.25\">-1.25</option><option value=\"-1.5\">-1.5</option><option value=\"-1.75\">-1.75</option><option value=\"-2\">-2</option></select>\n"+
           "<p>Y</p><select name=\"y_sel\" id=\"y_selector\"><option value=\"0\">0</option><option value=\"0.25\">0.25</option><option value=\"0.5\">0.5</option><option value=\"0.75\">0.75</option><option value=\"1\">1</option><option value=\"1.25\">1.25</option><option value=\"1.5\">1.5</option><option value=\"1.75\">1.75</option><option value=\"2\">2</option><option value=\"-0.25\">-0.25</option><option value=\"-0.5\">-0.5</option><option value=\"-0.75\">-0.75</option><option value=\"-1\">-1</option><option value=\"-1.25\">-1.25</option><option value=\"-1.5\">-1.5</option><option value=\"-1.75\">-1.75</option><option value=\"-2\">-2</option></select>\n"+
