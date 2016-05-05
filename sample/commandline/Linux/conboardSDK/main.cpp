@@ -120,7 +120,7 @@ void index(Request* req, Response* res) {
                 "              $.ajax({\n" +
                 "                  url: \"/telemetry_data_gps\",\n" +
                 "                  success: function( data ) {\n" +
-                "                      alert(data);\n" +
+                "                      add_plcmk(data.split(\"!\")[0],data.split(\"!\")[1])\n" +
                 "                  }\n" +
                 "              });\n" +
                 "          }\n" +
@@ -142,7 +142,7 @@ void index(Request* req, Response* res) {
                 "                  }\n" +
                 "              });\n" +
                 "          }\n" +
-                "      </script>\n" +
+                "      </script> <script src=\"http://api-maps.yandex.ru/2.1/?lang=en_US\" type=\"text/javascript\"></script><script type=\"text/javascript\">ymaps.ready(init);var myMap,myPlacemark;function add_plcmk(data_x,data_y){myPlacemark = new ymaps.Placemark([data_x, data_y], {hintContent: \'Kiev\',balloonContent: \'Capital of Ukraine\'});myMap.geoObjects.add(myPlacemark);};function init(){myMap = new ymaps.Map(\"map\", {center: [55.76, 37.64],zoom: 7});myPlacemark = new ymaps.Placemark([55.76, 37.64], {hintContent: \'Kiev\',balloonContent: \'Capital of Ukraine\'});myMap.geoObjects.add(myPlacemark); }</script>\n" +
                 "  </head>\n" +
                 "  <body>\n" +
                 "<button onclick=\"activate()\">ACTIVATE</button>\n" +
@@ -159,7 +159,7 @@ void index(Request* req, Response* res) {
           "<p>Y</p><select name=\"y_sel\" id=\"y_selector\"><option value=\"0\">0</option><option value=\"0.25\">0.25</option><option value=\"0.5\">0.5</option><option value=\"0.75\">0.75</option><option value=\"1\">1</option><option value=\"1.25\">1.25</option><option value=\"1.5\">1.5</option><option value=\"1.75\">1.75</option><option value=\"2\">2</option><option value=\"-0.25\">-0.25</option><option value=\"-0.5\">-0.5</option><option value=\"-0.75\">-0.75</option><option value=\"-1\">-1</option><option value=\"-1.25\">-1.25</option><option value=\"-1.5\">-1.5</option><option value=\"-1.75\">-1.75</option><option value=\"-2\">-2</option></select>\n"+
           "<p>Z</p><select name=\"z_sel\" id=\"z_selector\"><option value=\"0\">0</option><option value=\"0.25\">0.25</option><option value=\"0.5\">0.5</option><option value=\"0.75\">0.75</option><option value=\"1\">1</option><option value=\"1.25\">1.25</option><option value=\"1.5\">1.5</option><option value=\"1.75\">1.75</option><option value=\"2\">2</option><option value=\"-0.25\">-0.25</option><option value=\"-0.5\">-0.5</option><option value=\"-0.75\">-0.75</option><option value=\"-1\">-1</option><option value=\"-1.25\">-1.25</option><option value=\"-1.5\">-1.5</option><option value=\"-1.75\">-1.75</option><option value=\"-2\">-2</option></select>\n"+
           "<p>YAW</p><select name=\"yaw_sel\" id=\"yaw_selector\"><option value=\"0\">0</option><option value=\"0.25\">0.25</option><option value=\"0.5\">0.5</option><option value=\"0.75\">0.75</option><option value=\"1\">1</option><option value=\"1.25\">1.25</option><option value=\"1.5\">1.5</option><option value=\"1.75\">1.75</option><option value=\"2\">2</option><option value=\"-0.25\">-0.25</option><option value=\"-0.5\">-0.5</option><option value=\"-0.75\">-0.75</option><option value=\"-1\">-1</option><option value=\"-1.25\">-1.25</option><option value=\"-1.5\">-1.5</option><option value=\"-1.75\">-1.75</option><option value=\"-2\">-2</option></select><br>\n"+
-          "  <button onclick=\"follow_point()\">FOLLOW</button>\n" +
+          "  <button onclick=\"follow_point()\">FOLLOW</button><div id=\"map\" style=\"width: 600px; height: 400px\"></div>\n" +
                 "  </body>\n" +
                 "  </html>\n";
 }
@@ -223,20 +223,10 @@ void telemetry_data_battery(Request* req, Response* res) {
 
 void telemetry_data_gps(Request* req, Response* res) {
   BroadcastData bd = script.getApi()->getBroadcastData();
-  res->body << "Longitude: " << bd.pos.longitude << endl << "Latitude:  " << bd.pos.latitude << endl << "Altitude:  " << bd.pos.altitude << endl << "Height:    " << bd.pos.height << endl  << "Health:  " << (int)bd.pos.health << endl;
+  res->body << bd.pos.longitude << "!" << bd.pos.latitude << endl;
 }
 
 void follow_point_by_gps(Request* req, Response* res) {
-  DJI::onboardSDK::HotPoint hotpoint(&api);
-  GPSData myGPSData;
-  myGPSData.altitude = 3;
-	myGPSData.latitude = script.getApi()->getBroadcastData().pos.latitude + 0.002;
-	myGPSData.longtitude = script.getApi()->getBroadcastData().pos.longitude + 0.002;
-
-	hotpoint.setHotPoint(myGPSData);
-	hotpoint.setPalstance(15);
-	hotpoint.setRadius(4);
-	hotpoint.start();
     res->body << "Followed by GPS point";
 }
 
