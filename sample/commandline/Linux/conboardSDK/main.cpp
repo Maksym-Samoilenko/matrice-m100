@@ -81,7 +81,7 @@ void telemetry_data_battery(Request* req, Response* res) {
 
 void telemetry_data_gps(Request* req, Response* res) {
   BroadcastData bd = script.getApi()->getBroadcastData();
-  res->body << bd.pos.longitude << "!" << bd.pos.latitude << "!" <<bd.pos.altitude << "!" << (float)bd.battery << endl;
+  res->body << bd.pos.longitude << "!" << bd.pos.latitude << "!" <<bd.pos.altitude << "!" << (int)bd.battery << endl;
 }
 
 void follow_point_by_gps(Request* req, Response* res) {
