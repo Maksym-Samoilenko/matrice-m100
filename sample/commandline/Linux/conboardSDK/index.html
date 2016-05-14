@@ -1,108 +1,145 @@
-  <!DOCTYPE html>
-  <html>
-  <head>
-      <script src="http://code.jquery.com/jquery-latest.min.js"
-              type="text/javascript"></script>
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            console.log("init");
+            function takeoff(){
+            console.log("takeoff");
+            $.ajax({
+            url: "https://script.google.com/macros/s/AKfycbxZN7CczmOQAUhVB8QcT0rJ8XWtAzC5xF7oe_E5sfOXEsU-uXhP/exec",
+            type: "get",
+            dataType: "JSON",
+            data: {'command':'cmdset','cmd':'takeoff'},
+            success: function(data) {
+                console.log('takeoff process started');
+             }
+            });
+            }
 
-      <script type="text/javascript">
-          console.log('init');
+            function release(){
+            console.log("release");
+             $.ajax({
+            url: "https://script.google.com/macros/s/AKfycbxZN7CczmOQAUhVB8QcT0rJ8XWtAzC5xF7oe_E5sfOXEsU-uXhP/exec",
+            type: "get",
+            dataType: "JSON",
+            data: {'command':'cmdset','cmd':'release'},
+            success: function(data) {
+                console.log('release control process started');
+             }
+            });
+            }
 
-          function takeoff(){
-              console.log("takeoff");
-              $.ajax({
-                  url: "takeoff",
-                  success: function( data ) {
+            function obtain(){ +
+                    console.log("obtain control");
+            $.ajax({
+            url: "https://script.google.com/macros/s/AKfycbxZN7CczmOQAUhVB8QcT0rJ8XWtAzC5xF7oe_E5sfOXEsU-uXhP/exec",
+            type: "get",
+            dataType: "JSON",
+            data: {'command':'cmdset','cmd':'obtain'},
+            success: function(data) {
+                console.log('obtain control process started');
+             }
+            });
+            }
+
+            function landing(){
+            console.log("landing");
+            $.ajax({
+            url: "https://script.google.com/macros/s/AKfycbxZN7CczmOQAUhVB8QcT0rJ8XWtAzC5xF7oe_E5sfOXEsU-uXhP/exec",
+            type: "get",
+            dataType: "JSON",
+            data: {'command':'cmdset','cmd':'landing'},
+            success: function(data) {
+                console.log('landing process started');
+             }
+            });
+            }
+
+            function activate(){
+            console.log("activate");
+            $.ajax({
+            url: "https://script.google.com/macros/s/AKfycbxZN7CczmOQAUhVB8QcT0rJ8XWtAzC5xF7oe_E5sfOXEsU-uXhP/exec",
+            type: "get",
+            dataType: "JSON",
+            data: {'command':'cmdset','cmd':'activation'},
+            success: function(data) {
+                console.log('activation process started');
+             }
+            });
+            }
+
+            function follow_point(){
+            console.log("follow_point");
+            $.ajax({
+            url: "/follow_point?x=" + $("#x_selector").val() + "&y=" + $("#y_selector").val() + "&z=" + $("#z_selector").val() + "&yaw=" + $("#yaw_selector").val(),
+            success: function(data) {
                     console.log(data);
-                      console.log('takeoff ok')
-                  }
-              });
-          }
+                    }
+            });
+            }
 
-          function release(){
-              console.log("release");
-              $.ajax({
-                  url: "/release",
-                  success: function( data ) {
+            function follow_point_by_gps(){
+                    console.log("follow_point_by_gps");
+            $.ajax({
+                    url: "/follow_point_by_gps",
+                    success: function(data) {
                     console.log(data);
-                      console.log('release ok')
-                  }
-              });
-          }
+                    }
+            });
+            }
+        </script>
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+    <script type="text/javascript">
+        ymaps.ready(init);
+        var myMap,
+            myPlacemark;
 
-          function obtain(){
-              console.log("obtain control");
-              $.ajax({
-                  url: "/obtain",
-                  success: function( data ) {
-                    console.log(data);
-                      console.log('obtain control ok')
-                  }
-              });
-          }
+        function init(){
+            myMap = new ymaps.Map("map", {
+                center: [55.76, 37.64],
+                zoom: 7
+            });
 
-          function landing(){
-              console.log("landing");
-              $.ajax({
-                  url: "/landing",
-                  success: function( data ) {
-                    console.log(data);
-                      console.log('landing ok')
-                  }
-              });
-          }
+            //myPlacemark = new ymaps.Placemark([55.76, 37.64], {
+            //    hintContent: 'Москва!',
+            //    balloonContent: 'Столица России'
+            //});
 
-          function activate(){
-              console.log("activate");
-              $.ajax({
-                  url: "/activate",
-                  success: function( data ) {
-                    console.log(data);
-                      console.log('activate ok')
-                  }
-              });
-          }
+            //myMap.geoObjects.add(myPlacemark);
+            setInterval(function() {
+            console.log("interval function");
+            $.ajax({
+            url: "https://script.google.com/macros/s/AKfycbxZN7CczmOQAUhVB8QcT0rJ8XWtAzC5xF7oe_E5sfOXEsU-uXhP/exec",
+            type: "get",
+            dataType: "JSON",
+            data: {'command':'bdget'},
+            success: function(data) {
+                console.log(data);
+                var copter = new ymaps.Placemark([data.longitude, data.latitude], {
+                style: "default#redSmallPoint"});
+            myMap.geoObjects.add(copter);
+            //add battery contrroller + height controller
+             }
+            });
+          }, 1000);
 
-          function telemetry_data_time(){
-              console.log("telemetry_data_time");
-              $.ajax({
-                  url: "/telemetry_data_time",
-                  success: function( data ) {
-                    alert.log(data);
-                      console.log('telemetry_data_status ok')
-                  }
-              });
-          }
-
-          function telemetry_data_status(){
-              console.log("telemetry_data_status");
-              $.ajax({
-                  url: "/telemetry_data_status",
-                  success: function( data ) {
-                    alert.log(data);
-                      console.log('telemetry_data_status ok')
-                  }
-              });
-          }
-
-          function telemetry_data_battery(){
-              console.log("telemetry_data_battery");
-              $.ajax({
-                  url: "/telemetry_data_battery",
-                  success: function( data ) {
-                       alert.log(data);
-                      console.log('telemetry_data_battery ok')
-                  }
-              });
-          }
-      </script>
-  </head>
-  <body>
-<button onclick="activate()">ACTIVATE</button>
-<button onclick="obtain()">OBTAIN CONTROL</button>
-<button onclick="release()">RELEASE CONTROL</button>
-<button onclick="takeoff()">START</button>
-<button onclick="telemetry_data_time()">TIME</button>
-<button onclick="telemetry_data_status()">STATUS</button>
-<button onclick="telemetry_data_battery()">BATTERY</button>
-</body>
+        }
+    </script>
+    </head>
+    <body>
+        <button onclick="activate()">ACTIVATE</button>
+        <button onclick="obtain()">OBTAIN CONTROL</button>
+        <button onclick="release()">RELEASE CONTROL</button>
+        <button onclick="takeoff()">START</button>
+        <button onclick="landing()">LANDING</button>
+        <button onclick="follow_point_by_gps()">FOLLOW POINT BY GPS</button>
+         <p>X</p><select name="x_sel" id="x_selector"><option value="0">0</option><option value="0.25">0.25</option><option value="0.5">0.5</option><option value="0.75">0.75</option><option value="1">1</option><option value="1.25">1.25</option><option value="1.5">1.5</option><option value="1.75">1.75</option><option value="2">2</option><option value="-0.25">-0.25</option><option value="-0.5">-0.5</option><option value="-0.75">-0.75</option><option value="-1">-1</option><option value="-1.25">-1.25</option><option value="-1.5">-1.5</option><option value="-1.75">-1.75</option><option value="-2">-2</option></select>
+        <p>Y</p><select name="y_sel" id="y_selector"><option value="0">0</option><option value="0.25">0.25</option><option value="0.5">0.5</option><option value="0.75">0.75</option><option value="1">1</option><option value="1.25">1.25</option><option value="1.5">1.5</option><option value="1.75">1.75</option><option value="2">2</option><option value="-0.25">-0.25</option><option value="-0.5">-0.5</option><option value="-0.75">-0.75</option><option value="-1">-1</option><option value="-1.25">-1.25</option><option value="-1.5">-1.5</option><option value="-1.75">-1.75</option><option value="-2">-2</option></select>
+        <p>Z</p><select name="z_sel" id="z_selector"><option value="0">0</option><option value="0.25">0.25</option><option value="0.5">0.5</option><option value="0.75">0.75</option><option value="1">1</option><option value="1.25">1.25</option><option value="1.5">1.5</option><option value="1.75">1.75</option><option value="2">2</option><option value="-0.25">-0.25</option><option value="-0.5">-0.5</option><option value="-0.75">-0.75</option><option value="-1">-1</option><option value="-1.25">-1.25</option><option value="-1.5">-1.5</option><option value="-1.75">-1.75</option><option value="-2">-2</option></select>
+        <p>YAW</p><select name="yaw_sel" id="yaw_selector"><option value="0">0</option><option value="0.25">0.25</option><option value="0.5">0.5</option><option value="0.75">0.75</option><option value="1">1</option><option value="1.25">1.25</option><option value="1.5">1.5</option><option value="1.75">1.75</option><option value="2">2</option><option value="-0.25">-0.25</option><option value="-0.5">-0.5</option><option value="-0.75">-0.75</option><option value="-1">-1</option><option value="-1.25">-1.25</option><option value="-1.5">-1.5</option><option value="-1.75">-1.75</option><option value="-2">-2</option></select><br>
+        <button onclick="follow_point()">FOLLOW</button>
+        <div id="map" style="width: 600px; height: 400px"></div>
+    </body>
 </html>

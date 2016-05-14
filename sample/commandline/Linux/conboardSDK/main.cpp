@@ -21,148 +21,6 @@ ConboardSDKScript script(&api);
 
 const int version = (make_vers(3, 1, 10, 0));
 
-const char * get_index_html(){
-}
-
-void index(Request* req, Response* res) {
-    //globalDJIScript.addTask("CA");
-    //globalDJIScript.run();
-    res->body << std::string("  <!DOCTYPE html>\n") +
-                "  <html>\n" +
-                "  <head>\n" +
-                "      <script src=\"http://code.jquery.com/jquery-latest.min.js\"\n" +
-                "              type=\"text/javascript\"></script>\n" +
-                "\n" +
-                "      <script type=\"text/javascript\">\n" +
-                "          console.log(\"init\");\n" +
-                "\n" +
-                "          function takeoff(){\n" +
-                "              console.log(\"takeoff\");\n" +
-                "              $.ajax({\n" +
-                "                  url: \"takeoff\",\n" +
-                "                  success: function( data ) {\n" +
-                "                      console.log(\"takeoff ok\")\n" +
-                "                  }\n" +
-                "              });\n" +
-                "          }\n" +
-                "\n" +
-                "          function release(){\n" +
-                "              console.log(\"release\");\n" +
-                "              $.ajax({\n" +
-                "                  url: \"/release_control\",\n" +
-                "                  success: function( data ) {\n" +
-                "                      console.log(\"release ok\")\n" +
-                "                  }\n" +
-                "              });\n" +
-                "          }\n" +
-                "\n" +
-                "          function obtain(){\n" +
-                "              console.log(\"obtain control\");\n" +
-                "              $.ajax({\n" +
-                "                  url: \"/obtain_control\",\n" +
-                "                  success: function( data ) {\n" +
-                "                      console.log(\"obtain control ok\")\n" +
-                "                  }\n" +
-                "              });\n" +
-                "          }\n" +
-                "\n" +
-                "          function landing(){\n" +
-                "              console.log(\"landing\");\n" +
-                "              $.ajax({\n" +
-                "                  url: \"/landing\",\n" +
-                "                  success: function( data ) {\n" +
-                "                      console.log(\"landing ok\")\n" +
-                "                  }\n" +
-                "              });\n" +
-                "          }\n" +
-                "\n" +
-                "          function activate(){\n" +
-                "              console.log(\"activate\");\n" +
-                "              $.ajax({\n" +
-                "                  url: \"/activate\",\n" +
-                "                  success: function( data ) {\n" +
-                "                      console.log(\"activate ok\")\n" +
-                "                  }\n" +
-                "              });\n" +
-                "          }\n" +
-                "\n" +
-                "          function telemetry_data_time(){\n" +
-                "              console.log(\"telemetry_data_time\");\n" +
-                "              $.ajax({\n" +
-                "                  url: \"/telemetry_data_time\",\n" +
-                "                  success: function( data ) {\n" +
-                "                      alert(data);\n" +
-                "                  }\n" +
-                "              });\n" +
-                "          }\n" +
-                "\n" +
-                "          function telemetry_data_status(){\n" +
-                "              console.log(\"telemetry_data_status\");\n" +
-                "              $.ajax({\n" +
-                "                  url: \"/telemetry_data_status\",\n" +
-                "                  success: function( data ) {\n" +
-                "                      alert(data);\n" +
-                "                  }\n" +
-                "              });\n" +
-                "          }\n" +
-                "\n" +
-                "          function telemetry_data_battery(){\n" +
-                "              console.log(\"telemetry_data_battery\");\n" +
-                "              $.ajax({\n" +
-                "                  url: \"/telemetry_data_battery\",\n" +
-                "                  success: function( data ) {\n" +
-                "                      alert(data);\n" +
-                "                  }\n" +
-                "              });\n" +
-                "          }\n" +
-                "          function telemetry_data_gps(){\n" +
-                "              console.log(\"telemetry_data_gps\");\n" +
-                "              $.ajax({\n" +
-                "                  url: \"/telemetry_data_gps\",\n" +
-                "                  success: function( data ) {\n" +
-                "                      add_plcmk(data.split(\"!\")[0],data.split(\"!\")[1])\n" +
-                "                  }\n" +
-                "              });\n" +
-                "          }\n" +
-                "          function follow_point(){\n" +
-                "              console.log(\"follow_point\");\n" +
-                "              $.ajax({\n" +
-                "                  url: \"/follow_point?x=\"  + $(\"#x_selector\").val() + \"&y=\" + $(\"#y_selector\").val() +\"&z=\" + $(\"#z_selector\").val() +\"&yaw=\" + $(\"#yaw_selector\").val()" + ",\n" +
-                "                  success: function( data ) {\n" +
-                "                      console.log(data);\n" +
-                "                  }\n" +
-                "              });\n" +
-                "          }\n" +
-                "          function follow_point_by_gps(){\n" +
-                "              console.log(\"follow_point_by_gps\");\n" +
-                "              $.ajax({\n" +
-                "                  url: \"/follow_point_by_gps\",\n" +
-                "                  success: function( data ) {\n" +
-                "                      console.log(data);\n" +
-                "                  }\n" +
-                "              });\n" +
-                "          }\n" +
-                "      </script> <script src=\"http://api-maps.yandex.ru/2.1/?lang=en_US\" type=\"text/javascript\"></script><script type=\"text/javascript\">ymaps.ready(init);var myMap,myPlacemark;function add_plcmk(data_x,data_y){myPlacemark = new ymaps.Placemark([data_x, data_y], {hintContent: \'Kiev\',balloonContent: \'Capital of Ukraine\'});myMap.geoObjects.add(myPlacemark);};function init(){myMap = new ymaps.Map(\"map\", {center: [55.76, 37.64],zoom: 7});myPlacemark = new ymaps.Placemark([55.76, 37.64], {hintContent: \'Kiev\',balloonContent: \'Capital of Ukraine\'});myMap.geoObjects.add(myPlacemark); }</script>\n" +
-                "  </head>\n" +
-                "  <body>\n" +
-                "<button onclick=\"activate()\">ACTIVATE</button>\n" +
-                "<button onclick=\"obtain()\">OBTAIN CONTROL</button>\n" +
-                "<button onclick=\"release()\">RELEASE CONTROL</button>\n" +
-                "  <button onclick=\"takeoff()\">START</button>\n" + "<button onclick=\"landing()\">LANDING</button>\n" +
-
-                "  <button onclick=\"telemetry_data_time()\">TIME</button>\n" +
-                "  <button onclick=\"telemetry_data_status()\">STATUS</button>\n" +
-                "  <button onclick=\"telemetry_data_battery()\">BATTERY</button>\n" +
-                "  <button onclick=\"follow_point_by_gps()\">FOLLOW POINT BY GPS</button>\n" +
-                "  <button onclick=\"telemetry_data_gps()\">GPS</button><br>\n" +
-          "<p>X</p><select name=\"x_sel\" id=\"x_selector\"><option value=\"0\">0</option><option value=\"0.25\">0.25</option><option value=\"0.5\">0.5</option><option value=\"0.75\">0.75</option><option value=\"1\">1</option><option value=\"1.25\">1.25</option><option value=\"1.5\">1.5</option><option value=\"1.75\">1.75</option><option value=\"2\">2</option><option value=\"-0.25\">-0.25</option><option value=\"-0.5\">-0.5</option><option value=\"-0.75\">-0.75</option><option value=\"-1\">-1</option><option value=\"-1.25\">-1.25</option><option value=\"-1.5\">-1.5</option><option value=\"-1.75\">-1.75</option><option value=\"-2\">-2</option></select>\n"+
-          "<p>Y</p><select name=\"y_sel\" id=\"y_selector\"><option value=\"0\">0</option><option value=\"0.25\">0.25</option><option value=\"0.5\">0.5</option><option value=\"0.75\">0.75</option><option value=\"1\">1</option><option value=\"1.25\">1.25</option><option value=\"1.5\">1.5</option><option value=\"1.75\">1.75</option><option value=\"2\">2</option><option value=\"-0.25\">-0.25</option><option value=\"-0.5\">-0.5</option><option value=\"-0.75\">-0.75</option><option value=\"-1\">-1</option><option value=\"-1.25\">-1.25</option><option value=\"-1.5\">-1.5</option><option value=\"-1.75\">-1.75</option><option value=\"-2\">-2</option></select>\n"+
-          "<p>Z</p><select name=\"z_sel\" id=\"z_selector\"><option value=\"0\">0</option><option value=\"0.25\">0.25</option><option value=\"0.5\">0.5</option><option value=\"0.75\">0.75</option><option value=\"1\">1</option><option value=\"1.25\">1.25</option><option value=\"1.5\">1.5</option><option value=\"1.75\">1.75</option><option value=\"2\">2</option><option value=\"-0.25\">-0.25</option><option value=\"-0.5\">-0.5</option><option value=\"-0.75\">-0.75</option><option value=\"-1\">-1</option><option value=\"-1.25\">-1.25</option><option value=\"-1.5\">-1.5</option><option value=\"-1.75\">-1.75</option><option value=\"-2\">-2</option></select>\n"+
-          "<p>YAW</p><select name=\"yaw_sel\" id=\"yaw_selector\"><option value=\"0\">0</option><option value=\"0.25\">0.25</option><option value=\"0.5\">0.5</option><option value=\"0.75\">0.75</option><option value=\"1\">1</option><option value=\"1.25\">1.25</option><option value=\"1.5\">1.5</option><option value=\"1.75\">1.75</option><option value=\"2\">2</option><option value=\"-0.25\">-0.25</option><option value=\"-0.5\">-0.5</option><option value=\"-0.75\">-0.75</option><option value=\"-1\">-1</option><option value=\"-1.25\">-1.25</option><option value=\"-1.5\">-1.5</option><option value=\"-1.75\">-1.75</option><option value=\"-2\">-2</option></select><br>\n"+
-          "  <button onclick=\"follow_point()\">FOLLOW</button><div id=\"map\" style=\"width: 600px; height: 400px\"></div>\n" +
-                "  </body>\n" +
-                "  </html>\n";
-}
 void takeoff(Request* req, Response* res) {
   script.getFlight()->task((DJI::onboardSDK::Flight::TASK)4);
   sleep(3);
@@ -223,7 +81,7 @@ void telemetry_data_battery(Request* req, Response* res) {
 
 void telemetry_data_gps(Request* req, Response* res) {
   BroadcastData bd = script.getApi()->getBroadcastData();
-  res->body << bd.pos.longitude << "!" << bd.pos.latitude << endl;
+  res->body << bd.pos.longitude << "!" << bd.pos.latitude << "!" <<bd.pos.attitude << "!" << (float)bd.battery << endl;
 }
 
 void follow_point_by_gps(Request* req, Response* res) {
@@ -265,10 +123,10 @@ int main(int argc, const char* argv[]) {
     APIThread read(&api, 2);
     send.createThread();
     read.createThread();
+
     try {
         std::cout << "Listening on port 5000" << std::endl;
         WPP::Server server;
-        server.get("/", &index);
         server.get("/takeoff", &takeoff);
         server.get("/landing", &landing);
         server.get("/obtain_control", &obtain_control);
