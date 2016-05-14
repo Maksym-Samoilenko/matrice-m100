@@ -85,7 +85,26 @@ void telemetry_data_gps(Request* req, Response* res) {
 }
 
 void follow_point_by_gps(Request* req, Response* res) {
-    res->body << "Followed by GPS point";
+WayPointData fdata;
+fdata.damping = 0;
+fdata.yaw = 0;
+fdata.gimbalPitch = 0;
+fdata.turnMode = 0;
+fdata.hasAction = 0;
+fdata.actionTimeLimit = 100;
+fdata.actionNumber = 0;
+fdata.actionRepeat = 0;
+for (int i = 0; i < 16; ++i)
+{
+fdata.commandList[i] = 0;
+fdata.commandParameter[i] = 0;
+}
+fdata.index=0;
+fdata.latitude = 10;
+fdata.longitude = 10;
+fdata.altitude = 10;
+script->getWaypoint()->uploadIndexData(&fdata);
+res->body << "Followed by GPS point";
 }
 
 void follow_point(Request* req, Response* res) {
