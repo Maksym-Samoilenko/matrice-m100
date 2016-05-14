@@ -103,7 +103,7 @@ fdata.index=0;
 fdata.latitude = 10;
 fdata.longitude = 10;
 fdata.altitude = 10;
-script->getWaypoint()->uploadIndexData(&fdata);
+script.getWaypoint()->uploadIndexData(&fdata);
 res->body << "Followed by GPS point";
 }
 
